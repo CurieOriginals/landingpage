@@ -1,1 +1,580 @@
+/* ==============================
+   CurieOriginals – Netflix Style
+   ============================== */
 
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap');
+
+/* --- CSS Variables --- */
+:root {
+  --bg-dark: #141414;
+  --bg-card: #1f1f1f;
+  --bg-card-hover: #2a2a2a;
+  --accent: #E50914;
+  --accent-glow: rgba(229, 9, 20, 0.35);
+  --accent-hover: #ff1a27;
+  --text-primary: #ffffff;
+  --text-secondary: #a3a3a3;
+  --text-muted: #6b6b6b;
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-card: rgba(255, 255, 255, 0.08);
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --transition-fast: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-smooth: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-spring: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --- Reset & Base --- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* --- Background Gradient --- */
+.page-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(229, 9, 20, 0.07) 0%, transparent 60%),
+    linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 50%, #141414 100%);
+}
+
+/* --- Noise Overlay --- */
+.page-bg::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+  pointer-events: none;
+}
+
+/* --- Container --- */
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 20px 60px;
+}
+
+/* ================================
+   EASTER EGG – Top Right Gimmick
+   ================================ */
+.easter-egg {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 1000;
+  cursor: pointer;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  transition: var(--transition-fast);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.easter-egg:hover {
+  background: rgba(229, 9, 20, 0.15);
+  border-color: rgba(229, 9, 20, 0.3);
+  transform: rotate(15deg) scale(1.1);
+}
+
+.easter-egg svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--text-muted);
+  transition: var(--transition-fast);
+}
+
+.easter-egg:hover svg {
+  fill: var(--accent);
+}
+
+/* Speech Bubble */
+.speech-bubble {
+  position: fixed;
+  top: 62px;
+  right: 18px;
+  z-index: 999;
+  background: var(--accent);
+  color: #fff;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  padding: 8px 22px;
+  border-radius: var(--radius-md);
+  opacity: 0;
+  transform: translateY(-8px) scale(0.8);
+  pointer-events: none;
+  transition: var(--transition-spring);
+  box-shadow: 0 8px 30px var(--accent-glow);
+}
+
+.speech-bubble::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 16px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid var(--accent);
+}
+
+.speech-bubble.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ================================
+   HERO SECTION
+   ================================ */
+.hero {
+  text-align: center;
+  padding: 50px 0 40px;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.avatar-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 24px;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--accent);
+  box-shadow: 0 0 40px var(--accent-glow), 0 4px 20px rgba(0, 0, 0, 0.5);
+  transition: var(--transition-smooth);
+}
+
+.avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 60px var(--accent-glow), 0 8px 30px rgba(0, 0, 0, 0.6);
+}
+
+.avatar-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid rgba(229, 9, 20, 0.2);
+  animation: pulseRing 3s ease-in-out infinite;
+}
+
+.hero-name {
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(2.5rem, 6vw, 3.8rem);
+  letter-spacing: 4px;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.hero-name span {
+  color: var(--accent);
+}
+
+.hero-tagline {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+/* ================================
+   SECTION TITLES
+   ================================ */
+.section-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.6rem;
+  letter-spacing: 3px;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-title::before {
+  content: '';
+  width: 4px;
+  height: 22px;
+  background: var(--accent);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ================================
+   ABOUT SECTION
+   ================================ */
+.about {
+  margin-bottom: 48px;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.about-text {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+.about-note {
+  margin-top: 16px;
+  padding: 16px 20px;
+  background: rgba(229, 9, 20, 0.06);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+/* ================================
+   DONATION CARDS
+   ================================ */
+.donations {
+  margin-bottom: 48px;
+  animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.donation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.donation-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 32px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: var(--text-primary);
+  overflow: hidden;
+  transition: var(--transition-smooth);
+  cursor: pointer;
+}
+
+/* Shine sweep on hover */
+.donation-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.04),
+    transparent
+  );
+  transition: 0.6s ease;
+}
+
+.donation-card:hover::before {
+  left: 100%;
+}
+
+/* Bottom glow line */
+.donation-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent-glow);
+  transition: var(--transition-smooth);
+  border-radius: 2px;
+}
+
+.donation-card:hover::after {
+  width: 60%;
+}
+
+.donation-card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(229, 9, 20, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 20px var(--accent-glow);
+}
+
+.donation-card-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  transition: var(--transition-spring);
+  filter: brightness(0.95);
+}
+
+.donation-card:hover .donation-card-icon {
+  transform: scale(1.15) rotate(-2deg);
+  filter: brightness(1.1);
+}
+
+.donation-card-label {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}
+
+.donation-card-sublabel {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 500;
+}
+
+/* --- Inactive / Coming Soon Card --- */
+.donation-card.inactive {
+  opacity: 0.35;
+  pointer-events: none;
+  cursor: default;
+  filter: grayscale(1);
+}
+
+.donation-card.inactive::after {
+  display: none;
+}
+
+.coming-soon-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 0.65rem;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ================================
+   CHUB.AI BANNER
+   ================================ */
+.social-banner {
+  margin-bottom: 48px;
+  animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+.banner-link {
+  display: block;
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  text-decoration: none;
+  border: 1px solid var(--border-card);
+  transition: var(--transition-smooth);
+}
+
+.banner-link:hover {
+  border-color: rgba(229, 9, 20, 0.25);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.5), 0 0 25px var(--accent-glow);
+}
+
+.banner-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: var(--transition-smooth);
+}
+
+.banner-link:hover .banner-img {
+  filter: brightness(1.1);
+}
+
+.banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 40%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+  display: flex;
+  align-items: flex-end;
+  padding: 24px;
+  transition: var(--transition-smooth);
+}
+
+.banner-overlay-text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.banner-label {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+.banner-arrow {
+  font-size: 1.2rem;
+  color: var(--accent);
+  transition: var(--transition-spring);
+}
+
+.banner-link:hover .banner-arrow {
+  transform: translateX(6px);
+}
+
+/* ================================
+   FOOTER
+   ================================ */
+.footer {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-subtle);
+  animation: fadeInUp 0.8s ease-out 0.8s both;
+}
+
+.footer-text {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.footer-text .heart {
+  color: var(--accent);
+  display: inline-block;
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+/* ================================
+   ANIMATIONS
+   ================================ */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseRing {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.1; transform: scale(1.08); }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.2); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.15); }
+}
+
+/* ================================
+   RESPONSIVE
+   ================================ */
+@media (max-width: 600px) {
+  .container {
+    padding: 24px 16px 48px;
+  }
+
+  .hero {
+    padding: 36px 0 32px;
+  }
+
+  .avatar {
+    width: 96px;
+    height: 96px;
+  }
+
+  .hero-name {
+    letter-spacing: 2px;
+  }
+
+  .donation-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .donation-card {
+    flex-direction: row;
+    padding: 20px 24px;
+    gap: 16px;
+    justify-content: flex-start;
+  }
+
+  .donation-card-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .donation-card-text {
+    text-align: left;
+  }
+
+  .banner-overlay {
+    padding: 16px;
+  }
+
+  .easter-egg {
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .speech-bubble {
+    top: 52px;
+    right: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-name {
+    font-size: 2rem;
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+  }
+}
