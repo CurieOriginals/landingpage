@@ -1,1 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CurieOriginals – Support</title>
+  <meta name="description" content="Support CurieOriginals – Chub.ai Bot Creator">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="https://curie-assets.site/images/Avatar.webp" type="image/webp">
+</head>
+<body>
 
+  <!-- Background -->
+  <div class="page-bg"></div>
+
+  <!-- Easter Egg -->
+  <div class="easter-egg" id="easterEgg" aria-label="Secret" title="?">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
+    </svg>
+  </div>
+  <div class="speech-bubble" id="speechBubble">LOL</div>
+
+  <div class="container">
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <div class="avatar-wrapper">
+        <div class="avatar-ring"></div>
+        <img
+          class="avatar"
+          src="https://curie-assets.site/images/Avatar.webp"
+          alt="CurieOriginals Avatar"
+          loading="eager"
+        >
+      </div>
+      <h1 class="hero-name">Curie<span>Originals</span></h1>
+      <p class="hero-tagline">Chub.ai Bot Creator</p>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section class="about">
+      <h2 class="section-title">About</h2>
+      <p class="about-text">
+        If you'd like to help me improve my tools, create better features, and keep building high-quality bots — your support truly means the world. Bot creation takes a lot of time, effort, and money, but I genuinely love doing it.
+      </p>
+      <div class="about-note">
+        <strong>Please note:</strong> All of my bots, greetings, and content will always stay completely free! Nothing will ever be locked behind a paywall, and support will never affect the quality of my work. I do not offer commissions.
+      </div>
+    </section>
+
+    <!-- ===== DONATIONS ===== -->
+    <section class="donations">
+      <h2 class="section-title">Support</h2>
+      <div class="donation-grid">
+
+        <!-- Boosty -->
+        <a href="https://boosty.to/curieoriginals" target="_blank" rel="noopener noreferrer" class="donation-card">
+          <img class="donation-card-icon" src="https://curie-assets.site/images/boosty_logo.png" alt="Boosty">
+          <div class="donation-card-text">
+            <div class="donation-card-label">Boosty</div>
+            <div class="donation-card-sublabel">Support me</div>
+          </div>
+        </a>
+
+        <!-- SubscribeStar (inactive) -->
+        <div class="donation-card inactive">
+          <span class="coming-soon-badge">Coming Soon</span>
+          <img class="donation-card-icon" src="https://curie-assets.site/images/subscribestar_logo.png" alt="SubscribeStar">
+          <div class="donation-card-text">
+            <div class="donation-card-label">SubscribeStar</div>
+            <div class="donation-card-sublabel">Not yet available</div>
+          </div>
+        </div>
+
+        <!-- Buy Me a Coffee -->
+        <a href="https://buymeacoffee.com/curieoriginals" target="_blank" rel="noopener noreferrer" class="donation-card">
+          <img class="donation-card-icon" src="https://curie-assets.site/images/bmc-logo-no-background.png" alt="Buy Me a Coffee">
+          <div class="donation-card-text">
+            <div class="donation-card-label">Buy Me a Coffee</div>
+            <div class="donation-card-sublabel">Support me</div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ===== CHUB.AI BANNER ===== -->
+    <section class="social-banner">
+      <h2 class="section-title">Find Me</h2>
+      <a href="https://chub.ai/users/CurieOriginals" target="_blank" rel="noopener noreferrer" class="banner-link">
+        <img
+          class="banner-img"
+          src="https://curie-assets.site/images/support_box_Banner.png"
+          alt="CurieOriginals on Chub.ai"
+          loading="lazy"
+        >
+        <div class="banner-overlay">
+          <div class="banner-overlay-text">
+            <span class="banner-label">Visit my Chub.ai Profile</span>
+            <span class="banner-arrow">→</span>
+          </div>
+        </div>
+      </a>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+      <p class="footer-text">Made with <span class="heart">♥</span> by CurieOriginals</p>
+    </footer>
+
+  </div>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script>
+    // Easter Egg – Speech Bubble
+    const easterEgg = document.getElementById('easterEgg');
+    const speechBubble = document.getElementById('speechBubble');
+    let bubbleTimeout = null;
+
+    easterEgg.addEventListener('click', () => {
+      if (bubbleTimeout) {
+        clearTimeout(bubbleTimeout);
+      }
+
+      speechBubble.classList.add('visible');
+
+      bubbleTimeout = setTimeout(() => {
+        speechBubble.classList.remove('visible');
+        bubbleTimeout = null;
+      }, 3000);
+    });
+  </script>
+
+</body>
+</html>
